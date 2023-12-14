@@ -186,6 +186,8 @@ Application的生命周期：OnStartup→OnActivated→OnDeactivated→OnExit。
 
 ##### 窗体的生命周期
 
+Window窗体，也是空间，窗体随着用户创建而生于内存，最后也被销毁于内存，GC垃圾回收器干活。
+
 
 
 
