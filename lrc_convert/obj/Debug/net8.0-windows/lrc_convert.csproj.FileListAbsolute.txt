@@ -18,3 +18,4 @@ C:\Users\gyafe\respository\smart_tools\lrc_convert\obj\Debug\net8.0-windows\refi
 C:\Users\gyafe\respository\smart_tools\lrc_convert\obj\Debug\net8.0-windows\lrc_convert.pdb
 C:\Users\gyafe\respository\smart_tools\lrc_convert\obj\Debug\net8.0-windows\lrc_convert.genruntimeconfig.cache
 C:\Users\gyafe\respository\smart_tools\lrc_convert\obj\Debug\net8.0-windows\ref\lrc_convert.dll
+C:\Users\gyafe\respository\smart_tools\lrc_convert\obj\Debug\net8.0-windows\lrc_convert.sourcelink.json

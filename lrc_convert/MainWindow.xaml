@@ -6,14 +6,5 @@
         xmlns:local="clr-namespace:lrc_convert"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <StackPanel>
-        <Button x:Name = "button" Height = "30" Width = "70" Content = "OK" Margin = "20" />
 
-        <ListBox x:Name = "listBox" Height = "100" Width = "100" Margin = "20">
-            <ListBoxItem Content = "Item 1" />
-            <ListBoxItem Content = "Item 2" />
-            <ListBoxItem Content = "Item 3" />
-        </ListBox>
-
-    </StackPanel>
 </Window>
