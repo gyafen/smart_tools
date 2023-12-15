@@ -1,4 +1,6 @@
-##### APP.xaml和Application类
+#### 1. 入门
+
+##### 1.1. APP.xaml和Application类
 
 xaml类型的文件分为两部分，一部分以xaml扩展名为结尾的前端代码，另一部分以xaml.cs结尾的后端代码。
 
@@ -135,7 +137,7 @@ Application类是封装Windows Presentation Foundation的应用程序，我们�
 > - StartupUri——指定应用程序第一次启动时显示的用户界面
 > - Resources——窗体的背景颜色、字体大小、模板样式等等，都放在Resources中
 
-##### Application的生命周期
+##### 1.2. Application的生命周期
 
 StartupUri="MainWindow.xaml"表示程序启动的第一个窗体是MainWindow。
 
@@ -184,9 +186,138 @@ namespace HelloWorld
 
 Application的生命周期：OnStartup→OnActivated→OnDeactivated→OnExit。
 
-##### 窗体的生命周期
+##### 1.3. 窗体的生命周期
 
 Window窗体，也是空间，窗体随着用户创建而生于内存，最后也被销毁于内存，GC垃圾回收器干活。
+
+```C#
+namespace HelloWorld
+{
+    /// <summary>
+    /// MainWindow.xaml 的交互逻辑
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}
+```
+
+MainWindow继承于Window类。
+
+MianWindow的继承路线：MainWindow→Window→ContenControl→Control→FrameworkElement→UIElement→Visual→DepedencyObject→DispatcherObject。
+
+| 事件              | 含义                                           |
+| ----------------- | ---------------------------------------------- |
+| SourceInitialized | 创建窗体源时发生此事件                         |
+| Activated         | 当前窗体成为前台窗体时触发此事件               |
+| Loaded            | 当前窗体内部所有元素完成布局和呈现时发生此事件 |
+| ContentRendered   | 当前窗体的内容呈现之后发生此事件               |
+| Closing           | 当前窗体关闭之后发生此事件                     |
+| Deactivated       | 当前窗体成为后台窗体时发生此事件               |
+| Closed            | 当前窗体关闭时发生此事件                       |
+| Unloaded          | 当前窗体从元素树中删除时引发此事件             |
+
+##### 1.4. window窗体的组成
+
+window窗体本质上是一个控件，只不过和一般的控件有所区别，比如它有closing和closed事件，而一般控件是不可以关闭的，另外，window窗体可以容纳其他的控件。最后，窗体分为两个部分，工作区和非工作区。
+
+###### 非工作区
+
+包含：图标、标题、窗体菜单、最小化按钮、最大化按钮、关闭按钮、窗体边框、右下角鼠标拖动调整窗体尺寸。
+
+###### 工作区
+
+window窗体的工作区是指Content属性。Content属性表示窗体的内容，类型为object，即可以是任意的引用类型。需要注意的是Content属性并不在Window类中，而是在他的父类ContentControl中。
+
+> 默认的`<window></window>`之中只能存在一个控件，就是因为Content是object类型，意思是只接受一个对象。如何向窗体增加多个控件？可以用grid布局控件。
+
+#### 2. 控件父类
+
+##### 2.1. 控件的父类们
+
+C#的终极父类是Object，WPF中的终极父类是DispatcherObject，DispatcherObject继承于Object。
+
+先看几个控件的继承关系：
+
+> **Button→**
+>
+> ​	ButtonBase→
+>
+> ​			ContentControl→
+>
+> ​						Control→
+>
+> ​							FrameworkElement→UIElement→Visual→DependencyObject→DispatcherObject
+
+> **StackPanel→**
+>
+> ​		Panel→
+>
+> ​			FrameworkElement→UIElement→Visual→DependencyObject→DispatcherObject
+
+> **Rectangle→**
+>
+> ​		Shape→
+>
+> ​			FrameworkElement→UIElement→Visual→DependencyObject→DispatcherObject
+
+​			
+
+发现Button、StackPanel、Rectangle三个控件都继承于**FrameworkElement→UIElement→Visual→DependencyObject→DispatcherObject**
+
+因此可以得出结论，控件的父类们至少有如下几个类型：
+
+- DispatcherObject
+- DependencyObject
+- Visual
+- UIElement
+- FrameworkElement
+
+WPF几乎所有的控件都继承于这5个父类：
+
+<img src="E:\mdimage\2023081203432433.png" alt="img" style="zoom: 80%;" />
+
+##### 2.2. DispatcherObject类
+
+.NET为WPF准备了两个线程，分别用于呈现界面（后台线程）和管理界面（UI线程）。后台线程一直隐藏于后台默默运行，我们感知不到，我们能感知到的是UI线程。
+
+绝大多数控件是在UI线程上创建，而且，其他后台子线程不能直接访问UI线程上的控件，那么后台线程非要访问UI线程上的控件，该咋办？微软提供了一个中间商：Dispatcher，将Dispatcher放到一个抽象类DispatcherObject，然后保证所有的控件都从DispatcherObject继承，这样当后台线程要访问控件时，就可以通过Dispatcher来访问了。Dispatcher是DispatcherObject的成员，提供了Invoke和BeginInvoke供我们安全访问UI线程中的控件。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
