@@ -279,7 +279,7 @@ C#的终极父类是Object，WPF中的终极父类是DispatcherObject，Dispatch
 
 WPF几乎所有的控件都继承于这5个父类：
 
-<img src="E:\mdimage\2023081203432433.png" alt="img" style="zoom: 80%;" />
+<img src="assets\2023081203432433.png" alt="img" style="zoom: 80%;" />
 
 ##### 2.2. DispatcherObject类
 
@@ -335,6 +335,24 @@ namespace lrc_convert
 ```
 
 运行之后3秒，按钮的内容从“START”变成了“SMART”。
+
+<img src="assets\image-20231220230940742.png" alt="image-20231220230940742" style="zoom: 67%;" />
+
+Task工厂创建子线程，然后，调用了button的Dispatcher调度员，其Invoke方法中传入了一个匿名函数，这个匿名函数中改变了button的content属性。
+
+我们主要关心：button继承了DispatcherObject类，因此其中含有Dispatcher成员。
+
+**DispatcherObject类的两个作用：**
+
+- 提供对对象所关联的当前的Dispatcher的访问权限，意思就是谁继承了它，谁就拥有了Dispatcher。
+
+- 提供方法以检查 (CheckAccess) 和验证 (VerifyAccess) 某个线程是否有权访问对象（派生于 DispatcherObject）。CheckAccess 与 VerifyAccess 的区别在于 CheckAccess 返回一个布尔值，表示当前线程是否有可以使用的对象，而 VerifyAccess 则在线程无权访问对象的情况下引发异常。
+
+##### 2.3. DependencyObject类
+
+
+
+
 
 
 
