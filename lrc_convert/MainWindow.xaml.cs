@@ -21,21 +21,14 @@ namespace lrc_convert
         public MainWindow()
         {
             InitializeComponent();
-            this.SourceInitialized += (s, e) => Debug.WriteLine("1.MainWindow的SourceInitialized被执行");
-
-            this.Activated += (s, e) => Debug.WriteLine("2.MainWindow的Activated被执行");
-
-            this.Loaded += (s, e) => Debug.WriteLine("3.MainWindow的Loaded被执行");
-
-            this.ContentRendered += (s, e) => Debug.WriteLine("4.MainWindow的ContentRendered被执行");
-
-            this.Deactivated += (s, e) => Debug.WriteLine("5.MainWindow的Deactivated被执行");
-
-            this.Closing += (s, e) => Debug.WriteLine("6.MainWindow的Closing被执行");
-
-            this.Closed += (s, e) => Debug.WriteLine("7.MainWindow的Closed被执行");
-
-            this.Unloaded += (s, e) => Debug.WriteLine("8.MainWindow的Unloaded被执行");
+            Task.Factory.StartNew(() =>
+            {
+                Task.Delay(3000).Wait();
+                button.Dispatcher.Invoke(() =>
+                {
+                    button.Content = "SMART";
+                });
+            });
 
         }
     }

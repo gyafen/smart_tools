@@ -287,13 +287,54 @@ WPF几乎所有的控件都继承于这5个父类：
 
 绝大多数控件是在UI线程上创建，而且，其他后台子线程不能直接访问UI线程上的控件，那么后台线程非要访问UI线程上的控件，该咋办？微软提供了一个中间商：Dispatcher，将Dispatcher放到一个抽象类DispatcherObject，然后保证所有的控件都从DispatcherObject继承，这样当后台线程要访问控件时，就可以通过Dispatcher来访问了。Dispatcher是DispatcherObject的成员，提供了Invoke和BeginInvoke供我们安全访问UI线程中的控件。
 
+看如下的例子：
 
+前端代码：
 
+```xaml
+<Window x:Class="lrc_convert.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lrc_convert"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="button" Content="START"/>
+    </Grid>
+</Window>
 
+```
 
+后端代码：
 
+```C#
+namespace lrc_convert
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            Task.Factory.StartNew(() =>
+            {
+                Task.Delay(3000).Wait();
+                button.Dispatcher.Invoke(() =>
+                {
+                    button.Content = "SMART";
+                });
+            });
 
+        }
+    }
+}
+```
 
+运行之后3秒，按钮的内容从“START”变成了“SMART”。
 
 
 
