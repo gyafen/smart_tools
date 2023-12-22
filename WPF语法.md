@@ -336,7 +336,7 @@ namespace lrc_convert
 
 运行之后3秒，按钮的内容从“START”变成了“SMART”。
 
-<img src="assets\image-20231220230940742.png" alt="image-20231220230940742" style="zoom: 67%;" />
+<img src="assets\image-20231220230940742.png" alt="image-20231220230940742" style="zoom: 50%;" />
 
 Task工厂创建子线程，然后，调用了button的Dispatcher调度员，其Invoke方法中传入了一个匿名函数，这个匿名函数中改变了button的content属性。
 
@@ -349,6 +349,16 @@ Task工厂创建子线程，然后，调用了button的Dispatcher调度员，其
 - 提供方法以检查 (CheckAccess) 和验证 (VerifyAccess) 某个线程是否有权访问对象（派生于 DispatcherObject）。CheckAccess 与 VerifyAccess 的区别在于 CheckAccess 返回一个布尔值，表示当前线程是否有可以使用的对象，而 VerifyAccess 则在线程无权访问对象的情况下引发异常。
 
 ##### 2.3. DependencyObject类
+
+微软在WPF框架中，推出了数据驱动模式。数据驱动模式是指控件的属性不再被直接赋值，而是绑定了另外一个变量，当这个变量发生改变时 ，控件的属性也会跟着改变，这样的属性被称为是依赖属性。WPF的所有控件都可以使用数据驱动模式，因为所有的控件都继承了DependencyObject这个基类。
+
+> DependencyObject类表示参与依赖属性系统的对象。属性系统的主要功能是计算属性的值，并提供有关已经更改的值的系统通知。参与属性系统的另一个类DependencyProperty允许将依赖属性注册到属性系统，并提供有关每个依赖属性的标识和信息，而DependencyObject为基类，使对象能够使用此依赖属性。
+
+DependencyObject的定义中，比较常用的是GetValue和SetValue。GetValue表示获取某一个依赖属性的值，由于不确定这个值是什么类型，因此微软把这个函数的返回值设置为Object。SetValue表示设置某一个依赖属性的值，它有两个参数，第一个参数dp表示要设置的依赖属性，第二个参数value表示新值。
+
+##### 2.4. Visual类
+
+Visual是WPF框架中的第三个父类，主要是为WPF中的呈现提供支持，其中包含命中测试 、坐标转换和边界框计算它位于程序集：PresentationCore.dll库文件中，他的命名空间：System.Windows.Media。
 
 
 
